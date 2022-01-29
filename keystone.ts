@@ -32,5 +32,8 @@ export default withAuth(
     },
     lists,
     session,
+    server: {
+      port: 80
+    }
   })
 );
