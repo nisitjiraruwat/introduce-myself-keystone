@@ -14,6 +14,8 @@ import { lists } from './schema';
 // Keystone auth is configured separately - check out the basic auth setup we are importing from our auth file.
 import { withAuth, session } from './auth';
 
+const PORT = process.env.PORT || 80;
+
 export default withAuth(
   // Using the config function helps typescript guide you to the available options.
   config({
@@ -33,7 +35,7 @@ export default withAuth(
     lists,
     session,
     server: {
-      port: 80
+      port: PORT
     }
   })
 );
