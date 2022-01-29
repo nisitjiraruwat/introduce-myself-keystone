@@ -75,9 +75,9 @@ export const lists: Lists = {
     access: {
       operation: {
         query: () => true,
-        create: ({ session, context }) => session.get({ req: context.req!, createContext: () => context }) !== undefined,
-        update: ({ session, context }) => session.get({ req: context.req!, createContext: () => context }) !== undefined,
-        delete: ({ session, context }) => session.get({ req: context.req!, createContext: () => context }) !== undefined,
+        create: ({ session, context }) => session !== undefined,
+        update: ({ session, context }) => session !== undefined,
+        delete: ({ session, context }) => session !== undefined,
       }
     }
   }),
@@ -91,9 +91,9 @@ export const lists: Lists = {
     access: {
       operation: {
         query: () => true,
-        create: ({ session, context }) => session.get({ req: context.req!, createContext: () => context }) !== undefined,
-        update: ({ session, context }) => session.get({ req: context.req!, createContext: () => context }) !== undefined,
-        delete: ({ session, context }) => session.get({ req: context.req!, createContext: () => context }) !== undefined,
+        create: ({ session, context }) => session !== undefined,
+        update: ({ session, context }) => session !== undefined,
+        delete: ({ session, context }) => session !== undefined,
       }
     }
   }),
@@ -110,9 +110,9 @@ export const lists: Lists = {
     access: {
       operation: {
         query: () => true,
-        create: ({ session, context }) => session.get({ req: context.req!, createContext: () => context }) !== undefined,
-        update: ({ session, context }) => session.get({ req: context.req!, createContext: () => context }) !== undefined,
-        delete: ({ session, context }) => session.get({ req: context.req!, createContext: () => context }) !== undefined,
+        create: ({ session, context }) => session !== undefined,
+        update: ({ session, context }) => session !== undefined,
+        delete: ({ session, context }) => session !== undefined,
       }
     }
   })
