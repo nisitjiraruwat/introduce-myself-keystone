@@ -12,43 +12,59 @@ generator client {
 }
 
 model User {
-  id       String @id @default(uuid()) @postgresql.Uuid
-  name     String @default("")
-  email    String @unique @default("")
-  password String
+  id                        String       @id @default(uuid()) @postgresql.Uuid
+  name                      String       @default("")
+  username                  String       @unique @default("")
+  email                     String       @unique @default("")
+  password                  String
+  from_Resume_user          Resume[]     @relation("Resume_user")
+  from_Education_createdBy  Education[]  @relation("Education_createdBy")
+  from_Experience_createdBy Experience[] @relation("Experience_createdBy")
 }
 
 model Resume {
   id               String       @id @default(uuid()) @postgresql.Uuid
-  email            String       @unique @default("")
+  user             User?        @relation("Resume_user", fields: [userId], references: [id])
+  userId           String?      @map("user") @postgresql.Uuid
+  fullname         String       @default("")
+  email            String       @default("")
   phone            String       @default("")
   address          String       @default("")
+  website          String       @default("")
   educations       Education[]  @relation("Education_resume")
   additionalSkills Json?
   experiences      Experience[] @relation("Experience_resume")
+
+  @@index([userId])
 }
 
 model Education {
-  id         String  @id @default(uuid()) @postgresql.Uuid
-  resume     Resume? @relation("Education_resume", fields: [resumeId], references: [id])
-  resumeId   String? @map("resume") @postgresql.Uuid
-  name       String  @default("")
-  level      String  @default("")
-  graduation String  @default("")
+  id          String  @id @default(uuid()) @postgresql.Uuid
+  resume      Resume? @relation("Education_resume", fields: [resumeId], references: [id])
+  resumeId    String? @map("resume") @postgresql.Uuid
+  name        String  @default("")
+  level       String  @default("")
+  graduation  String  @default("")
+  createdBy   User?   @relation("Education_createdBy", fields: [createdById], references: [id])
+  createdById String? @map("createdBy") @postgresql.Uuid
 
   @@index([resumeId])
+  @@index([createdById])
 }
 
 model Experience {
-  id       String    @id @default(uuid()) @postgresql.Uuid
-  resume   Resume?   @relation("Experience_resume", fields: [resumeId], references: [id])
-  resumeId String?   @map("resume") @postgresql.Uuid
-  position String    @default("")
-  company  String    @default("")
-  address  String    @default("")
-  fromDate DateTime?
-  toDate   DateTime?
-  works    Json?
+  id          String    @id @default(uuid()) @postgresql.Uuid
+  resume      Resume?   @relation("Experience_resume", fields: [resumeId], references: [id])
+  resumeId    String?   @map("resume") @postgresql.Uuid
+  position    String    @default("")
+  company     String    @default("")
+  address     String    @default("")
+  fromDate    DateTime?
+  toDate      DateTime?
+  works       Json?
+  createdBy   User?     @relation("Experience_createdBy", fields: [createdById], references: [id])
+  createdById String?   @map("createdBy") @postgresql.Uuid
 
   @@index([resumeId])
+  @@index([createdById])
 }
