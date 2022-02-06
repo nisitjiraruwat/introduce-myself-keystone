@@ -9,8 +9,6 @@ WORKDIR /code
 
 COPY . /code
 
-RUN cat make.env
-
 RUN npm run build
 
 ENV NODE_ENV production
