@@ -9,6 +9,4 @@ COPY package.json /code
 
 RUN npm config set registry https://registry.npmjs.org/
 
-ARG OPTIONS_ARG
-
-RUN npm ci $OPTIONS_ARG
+RUN npm ci

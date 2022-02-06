@@ -1,0 +1,8 @@
+.vscode
+.keystone
+.git
+node_modules
+Node.Dockerfile
+Dockerfile
+Package.Dockerfile
+Makefile
