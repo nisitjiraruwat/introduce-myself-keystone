@@ -4,8 +4,7 @@ RUN apt update -y && apt install libssl-dev -y
 
 WORKDIR /code
 
-COPY package-lock.json /code
-COPY package.json /code
+COPY . /code
 
 RUN npm config set registry https://registry.npmjs.org/
 
