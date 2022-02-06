@@ -1,7 +1,7 @@
 .vscode
 .keystone
 .git
-.env
+make.env
 node_modules
 Node.Dockerfile
 Dockerfile

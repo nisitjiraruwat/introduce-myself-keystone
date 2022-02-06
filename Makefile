@@ -1,4 +1,4 @@
-include .env
+include make.env
 
 export TAG=$(shell git describe --always --tags --dirty)
 export PACKAGE_TAG=$(shell git log -n 1 --pretty=format:%H -- package-lock.json)
