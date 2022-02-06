@@ -37,7 +37,7 @@ const { withAuth } = createAuth({
   initFirstItem: {
     // If there are no items in the database, keystone will ask you to create
     // a new user, filling in these fields.
-    fields: ['name', 'email', 'password'],
+    fields: ['username', 'name', 'email', 'password'],
   },
 });
 

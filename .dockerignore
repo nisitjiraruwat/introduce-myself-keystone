@@ -1,0 +1,9 @@
+.vscode
+.keystone
+.git
+make.env
+node_modules
+Node.Dockerfile
+Dockerfile
+Package.Dockerfile
+Makefile

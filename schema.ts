@@ -24,7 +24,6 @@ import {
   relationship,
   password,
   timestamp,
-  select,
   json,
 } from '@keystone-6/core/fields';
 // The document field is a more complicated field, so it's in its own package
@@ -48,10 +47,14 @@ export const lists: Lists = {
     // a name so we can refer to them, and a way to connect users to posts.
     fields: {
       name: text({ validation: { isRequired: true } }),
-      email: text({
+      username: text({
         validation: { isRequired: true },
         isIndexed: 'unique',
-        isFilterable: true,
+        isFilterable: true
+      }),
+      email: text({
+        validation: { isRequired: true },
+        isIndexed: 'unique'
       }),
       // The password field takes care of hiding details and hashing values
       password: password({ validation: { isRequired: true } })
@@ -59,15 +62,18 @@ export const lists: Lists = {
     // Here we can configure the Admin UI. We want to show a user's name and posts in the Admin UI
     ui: {
       listView: {
-        initialColumns: ['name'],
+        initialColumns: ['name', 'username'],
       },
     },
   }),
   Resume: list({
     fields: {
-      email: text({ validation: { isRequired: true }, isIndexed: 'unique' }),
+      user: relationship({ ref: 'User', isFilterable: true }),
+      fullname: text({ label: 'Full Name', validation: { isRequired: true } }),
+      email: text({ validation: { isRequired: true } }),
       phone: text(),
       address: text(),
+      website: text(),
       educations: relationship({ ref: 'Education.resume', many: true }),
       additionalSkills: json(),
       experiences: relationship({ ref: 'Experience.resume', many: true })
@@ -86,7 +92,8 @@ export const lists: Lists = {
       resume: relationship({ ref: 'Resume.educations' }),
       name: text(),
       level: text(),
-      graduation: text()
+      graduation: text(),
+      createdBy: relationship({ ref: 'User' })
     },
     access: {
       operation: {
@@ -105,7 +112,8 @@ export const lists: Lists = {
       address: text(),
       fromDate: timestamp(),
       toDate: timestamp(),
-      works: json()
+      works: json(),
+      createdBy: relationship({ ref: 'User' })
     },
     access: {
       operation: {

@@ -4,6 +4,7 @@
 type User {
   id: ID!
   name: String
+  username: String
   email: String
   password: PasswordState
 }
@@ -14,6 +15,7 @@ type PasswordState {
 
 input UserWhereUniqueInput {
   id: ID
+  username: String
   email: String
 }
 
@@ -23,6 +25,7 @@ input UserWhereInput {
   NOT: [UserWhereInput!]
   id: IDFilter
   name: StringFilter
+  username: StringFilter
   email: StringFilter
 }
 
@@ -74,6 +77,7 @@ input NestedStringFilter {
 input UserOrderByInput {
   id: OrderDirection
   name: OrderDirection
+  username: OrderDirection
   email: OrderDirection
 }
 
@@ -84,6 +88,7 @@ enum OrderDirection {
 
 input UserUpdateInput {
   name: String
+  username: String
   email: String
   password: String
 }
@@ -95,15 +100,19 @@ input UserUpdateArgs {
 
 input UserCreateInput {
   name: String
+  username: String
   email: String
   password: String
 }
 
 type Resume {
   id: ID!
+  user: User
+  fullname: String
   email: String
   phone: String
   address: String
+  website: String
   educations(
     where: EducationWhereInput! = {}
     orderBy: [EducationOrderByInput!]! = []
@@ -123,7 +132,6 @@ type Resume {
 
 input ResumeWhereUniqueInput {
   id: ID
-  email: String
 }
 
 input ResumeWhereInput {
@@ -131,9 +139,12 @@ input ResumeWhereInput {
   OR: [ResumeWhereInput!]
   NOT: [ResumeWhereInput!]
   id: IDFilter
+  user: UserWhereInput
+  fullname: StringFilter
   email: StringFilter
   phone: StringFilter
   address: StringFilter
+  website: StringFilter
   educations: EducationManyRelationFilter
   experiences: ExperienceManyRelationFilter
 }
@@ -152,18 +163,29 @@ input ExperienceManyRelationFilter {
 
 input ResumeOrderByInput {
   id: OrderDirection
+  fullname: OrderDirection
   email: OrderDirection
   phone: OrderDirection
   address: OrderDirection
+  website: OrderDirection
 }
 
 input ResumeUpdateInput {
+  user: UserRelateToOneForUpdateInput
+  fullname: String
   email: String
   phone: String
   address: String
+  website: String
   educations: EducationRelateToManyForUpdateInput
   additionalSkills: JSON
   experiences: ExperienceRelateToManyForUpdateInput
+}
+
+input UserRelateToOneForUpdateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
+  disconnect: Boolean
 }
 
 input EducationRelateToManyForUpdateInput {
@@ -186,12 +208,20 @@ input ResumeUpdateArgs {
 }
 
 input ResumeCreateInput {
+  user: UserRelateToOneForCreateInput
+  fullname: String
   email: String
   phone: String
   address: String
+  website: String
   educations: EducationRelateToManyForCreateInput
   additionalSkills: JSON
   experiences: ExperienceRelateToManyForCreateInput
+}
+
+input UserRelateToOneForCreateInput {
+  create: UserCreateInput
+  connect: UserWhereUniqueInput
 }
 
 input EducationRelateToManyForCreateInput {
@@ -210,6 +240,7 @@ type Education {
   name: String
   level: String
   graduation: String
+  createdBy: User
 }
 
 input EducationWhereUniqueInput {
@@ -225,6 +256,7 @@ input EducationWhereInput {
   name: StringFilter
   level: StringFilter
   graduation: StringFilter
+  createdBy: UserWhereInput
 }
 
 input EducationOrderByInput {
@@ -239,6 +271,7 @@ input EducationUpdateInput {
   name: String
   level: String
   graduation: String
+  createdBy: UserRelateToOneForUpdateInput
 }
 
 input ResumeRelateToOneForUpdateInput {
@@ -257,6 +290,7 @@ input EducationCreateInput {
   name: String
   level: String
   graduation: String
+  createdBy: UserRelateToOneForCreateInput
 }
 
 input ResumeRelateToOneForCreateInput {
@@ -273,6 +307,7 @@ type Experience {
   fromDate: DateTime
   toDate: DateTime
   works: JSON
+  createdBy: User
 }
 
 scalar DateTime
@@ -293,6 +328,7 @@ input ExperienceWhereInput {
   address: StringFilter
   fromDate: DateTimeNullableFilter
   toDate: DateTimeNullableFilter
+  createdBy: UserWhereInput
 }
 
 input DateTimeNullableFilter {
@@ -323,6 +359,7 @@ input ExperienceUpdateInput {
   fromDate: DateTime
   toDate: DateTime
   works: JSON
+  createdBy: UserRelateToOneForUpdateInput
 }
 
 input ExperienceUpdateArgs {
@@ -338,6 +375,7 @@ input ExperienceCreateInput {
   fromDate: DateTime
   toDate: DateTime
   works: JSON
+  createdBy: UserRelateToOneForCreateInput
 }
 
 """
@@ -404,6 +442,7 @@ type UserAuthenticationWithPasswordFailure {
 
 input CreateInitialUserInput {
   name: String
+  username: String
   email: String
   password: String
 }
